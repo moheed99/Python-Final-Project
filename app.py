@@ -1592,14 +1592,12 @@ elif st.session_state.page == 'ml':
                         model, predictions, performance, error_msg = create_ml_model(
                             ml_data, model_key, target_col, feature_cols
                         )
-            
-            st.button("Train Model", key="train_ml_model", on_click=train_model_handler)
                         
                         if error_msg:
                             st.error(error_msg)
                         else:
                             # Store results
-                            st.session_state.ml_results = {
+                            st.session_state.ml_results[model_key] = {
                                 'model': model,
                                 'predictions': predictions,
                                 'performance': performance,
@@ -1608,7 +1606,9 @@ elif st.session_state.page == 'ml':
                                 'target_col': target_col,
                                 'model_type': model_key
                             }
-                            st.success("Model trained successfully!")
+                            st.success(f"{model_display_name} model trained successfully!")
+            
+            st.button("Train Model", key="train_ml_model", on_click=train_model_handler)
         
         st.markdown('</div>', unsafe_allow_html=True)
         
@@ -2030,7 +2030,7 @@ elif st.session_state.page == 'comparison':
         include_volume = st.checkbox("Include Volume Analysis", value=True)
         include_volatility = st.checkbox("Include Volatility Analysis", value=True)
         
-        if st.button("Compare Stocks", key="compare_stocks"):
+        def compare_stocks_handler():
             if len(selected_for_comparison) < 2:
                 st.error("Please select at least two stocks to compare.")
             else:
@@ -2056,6 +2056,8 @@ elif st.session_state.page == 'comparison':
                         st.success("Comparison data prepared!")
                     else:
                         st.error("No valid data available for the selected stocks.")
+        
+        st.button("Compare Stocks", key="compare_stocks", on_click=compare_stocks_handler)
         
         st.markdown('</div>', unsafe_allow_html=True)
         
