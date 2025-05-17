@@ -272,17 +272,28 @@ with st.sidebar:
     st.markdown('<h2 style="color:#00f2ff; text-shadow: 0 0 5px #00f2ff;">NeoFinance Analytics</h2>', unsafe_allow_html=True)
     st.markdown('<div style="background: rgba(31, 31, 46, 0.7); padding: 10px; border-radius: 5px; margin-bottom: 20px;"></div>', unsafe_allow_html=True)
     
-    # Navigation buttons
-    if st.button("🏠 Welcome", key="nav_welcome"):
+    # Define navigation button functions
+    def nav_welcome():
         navigate_to('welcome')
-    if st.button("📊 Dashboard", key="nav_dashboard"):
+        
+    def nav_dashboard():
         navigate_to('dashboard')
-    if st.button("📈 Stock Analysis", key="nav_stocks"):
+        
+    def nav_stocks():
         navigate_to('stocks')
-    if st.button("🤖 ML Analytics", key="nav_ml"):
+        
+    def nav_ml():
         navigate_to('ml')
-    if st.button("📊 Stock Comparison", key="nav_comparison"):
+        
+    def nav_comparison():
         navigate_to('comparison')
+    
+    # Navigation buttons
+    st.button("🏠 Welcome", key="nav_welcome", on_click=nav_welcome)
+    st.button("📊 Dashboard", key="nav_dashboard", on_click=nav_dashboard)
+    st.button("📈 Stock Analysis", key="nav_stocks", on_click=nav_stocks)
+    st.button("🤖 ML Analytics", key="nav_ml", on_click=nav_ml)
+    st.button("📊 Stock Comparison", key="nav_comparison", on_click=nav_comparison)
     
     st.markdown('<div style="background: rgba(31, 31, 46, 0.7); padding: 10px; border-radius: 5px; margin-top: 20px;"></div>', unsafe_allow_html=True)
     
@@ -993,7 +1004,7 @@ elif st.session_state.page == 'stocks':
         selected_period = st.selectbox("Time Period", list(period_options.keys()))
         period = period_options[selected_period]
     
-    if st.button("Analyze Stock", key="analyze_stock"):
+    def analyze_stock_handler():
         with st.spinner("Fetching stock data..."):
             hist, info = get_stock_data(stock_symbol, period)
             
@@ -1006,6 +1017,8 @@ elif st.session_state.page == 'stocks':
                     st.session_state.selected_stocks.append(stock_symbol)
             else:
                 st.error(f"Failed to fetch data for {stock_symbol}. Please check the symbol and try again.")
+    
+    st.button("Analyze Stock", key="analyze_stock", on_click=analyze_stock_handler)
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Display stock information if available
@@ -1569,7 +1582,7 @@ elif st.session_state.page == 'ml':
             )
             
             # Train model button
-            if st.button("Train Model", key="train_ml_model"):
+            def train_model_handler():
                 if not feature_cols:
                     st.error("Please select at least one feature column.")
                 elif model_key != "kmeans" and not target_col:
@@ -1579,6 +1592,8 @@ elif st.session_state.page == 'ml':
                         model, predictions, performance, error_msg = create_ml_model(
                             ml_data, model_key, target_col, feature_cols
                         )
+            
+            st.button("Train Model", key="train_ml_model", on_click=train_model_handler)
                         
                         if error_msg:
                             st.error(error_msg)
