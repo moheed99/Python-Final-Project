@@ -1606,7 +1606,7 @@ elif st.session_state.page == 'ml':
                                 'target_col': target_col,
                                 'model_type': model_key
                             }
-                            st.success(f"{model_display_name} model trained successfully!")
+                            st.success(f"Model trained successfully!")
             
             st.button("Train Model", key="train_ml_model", on_click=train_model_handler)
         
