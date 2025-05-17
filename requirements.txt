@@ -1,15 +1,9 @@
-streamlit>=1.35.0
-numpy~=1.26.0
-pandas>=2.0,<2.3
-matplotlib
-altair
-plotly
-pydeck
-beautifulsoup4
-requests
-scikit-learn
-joblib
-peewee
-pyarrow>=15.0,<16.0
-protobuf>=3.20,<5.0
-jinja2
+streamlit>=1.30.0
+pandas>=1.5.0
+numpy>=1.23.0,<2.0.0
+yfinance>=0.2.0
+scikit-learn>=1.2.0
+plotly>=5.10.0
+# matplotlib>=3.6.0  # Only if you explicitly use seaborn or matplotlib for st.pyplot which is not the case here
+openpyxl>=3.0.0
+kneed>=0.8.0
